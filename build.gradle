@@ -4,10 +4,11 @@ plugins {
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 group 'org.fillouh'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -26,18 +27,19 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'org.fillouh.fh_mediaplayer'
-    mainClass = 'org.fillouh.fh_mediaplayer.HelloApplication'
+    mainClass = 'org.fillouh.fh_mediaplayer.App'
 }
 
 javafx {
     version = '17.0.6'
-    modules = ['javafx.controls', 'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml','javafx.media']
 }
 
 dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation 'org.openjfx:javafx-media:21.0.2'
 }
 
 test {
@@ -54,4 +56,9 @@ jlink {
 
 jlinkZip {
     group = 'distribution'
+}
+
+
+shadowJar {
+    configurations = [project.configurations.runtimeClasspath]
 }
