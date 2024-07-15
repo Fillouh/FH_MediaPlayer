@@ -1,9 +1,15 @@
 package org.fillouh.fh_mediaplayer;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -26,10 +32,14 @@ public class MainController implements Initializable {
     @FXML
     private Button stopButton;
 
+    @FXML
+    private MediaView mediaView;
+
+    private MediaPlayer mediaPlayer;
     private String filePath;
 
 
-    private void openFile(){
+    public void openFile(){
         FileChooser fileChooser=new FileChooser();
         //nel campo extension possiamo metterci anche altre estensioni file
         FileChooser.ExtensionFilter filter=new FileChooser.ExtensionFilter("Select a File (*.mp4)","*.mp4");
@@ -37,8 +47,63 @@ public class MainController implements Initializable {
         File file=fileChooser.showOpenDialog(null);
         filePath=file.toURI().toString();
 
+        if(filePath!=null){
+            Media media=new Media(filePath);
+            mediaPlayer=new MediaPlayer(media);
+            mediaView.setMediaPlayer(mediaPlayer);
+
+            DoubleProperty witdth= mediaView.fitWidthProperty();
+            DoubleProperty height=mediaView.fitHeightProperty();
+
+            witdth.bind(Bindings.selectDouble(mediaView.sceneProperty(),"width"));
+            height.bind(Bindings.selectDouble(mediaView.sceneProperty(),"height"));
+
+            mediaPlayer.play();
+
+        }
+
 
     }
+
+    @FXML
+    private void pauseVideo(ActionEvent event){
+        mediaPlayer.pause();
+    }
+
+
+    @FXML
+    private void playVideo(ActionEvent event){
+        mediaPlayer.play();
+    }
+
+    @FXML
+    private void stopVideo(ActionEvent event){
+        mediaPlayer.stop();
+    }
+
+
+    @FXML
+    private void fastVideo(ActionEvent event){
+        mediaPlayer.setRate(1.5);
+
+    }
+    @FXML
+    private void fasterVideo(ActionEvent event){
+        mediaPlayer.setRate(2);
+    }
+    @FXML
+    private void slowVideo(ActionEvent event){
+        mediaPlayer.setRate(.75);
+    }
+    @FXML
+    private void slowerVideo(ActionEvent event){
+        mediaPlayer.setRate(.5);
+    }
+    @FXML
+    private void exit(ActionEvent event){
+        System.exit(0);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
