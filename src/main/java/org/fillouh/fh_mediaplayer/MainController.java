@@ -1,16 +1,24 @@
 package org.fillouh.fh_mediaplayer;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.net.URL;
@@ -35,6 +43,12 @@ public class MainController implements Initializable {
     @FXML
     private MediaView mediaView;
 
+    @FXML
+    private Slider slider;
+
+    @FXML
+    private Slider seekSlider;
+
     private MediaPlayer mediaPlayer;
     private String filePath;
 
@@ -58,6 +72,28 @@ public class MainController implements Initializable {
             witdth.bind(Bindings.selectDouble(mediaView.sceneProperty(),"width"));
             height.bind(Bindings.selectDouble(mediaView.sceneProperty(),"height"));
 
+            slider.setValue(mediaPlayer.getVolume()*100);
+            slider.valueProperty().addListener(new InvalidationListener() {
+                @Override
+                public void invalidated(Observable observable) {
+                    mediaPlayer.setVolume(slider.getValue()/100);
+                }
+            });
+
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration duration, Duration t1) {
+                    seekSlider.setValue(t1.toSeconds());
+                }
+            });
+
+            seekSlider.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    mediaPlayer.seek(Duration.seconds(seekSlider.getValue()));
+                }
+            });
+
             mediaPlayer.play();
 
         }
@@ -73,6 +109,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void playVideo(ActionEvent event){
+        mediaPlayer.setRate(1);
         mediaPlayer.play();
     }
 
