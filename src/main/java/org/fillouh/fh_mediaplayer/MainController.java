@@ -19,6 +19,11 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import org.fillouh.fh_mediaplayer.factories.Mp3MediaPlayerFactory;
+import org.fillouh.fh_mediaplayer.factories.Mp4MediaPlayerFactory;
+import org.fillouh.fh_mediaplayer.strategies.MP3FileExtensionStrategy;
+import org.fillouh.fh_mediaplayer.strategies.MP4FileExtensionStrategy;
+import org.fillouh.fh_mediaplayer.strategies.MediaPlayerChooser;
 
 import java.io.File;
 import java.net.URL;
@@ -56,14 +61,19 @@ public class MainController implements Initializable {
     public void openFile(){
         FileChooser fileChooser=new FileChooser();
         //nel campo extension possiamo metterci anche altre estensioni file
-        FileChooser.ExtensionFilter filter=new FileChooser.ExtensionFilter("Select a File (*.mp4)","*.mp4");
+        FileChooser.ExtensionFilter filter=new FileChooser.ExtensionFilter("Select a File (*.mp4, *mp3)","*.mp4","*.mp3");
         fileChooser.getExtensionFilters().add(filter);
         File file=fileChooser.showOpenDialog(null);
         filePath=file.toURI().toString();
 
         if(filePath!=null){
-            Media media=new Media(filePath);
-            mediaPlayer=new MediaPlayer(media);
+            MediaPlayerChooser chooser=new MediaPlayerChooser();
+            chooser.addStrategy("mp4",new MP4FileExtensionStrategy(new Mp4MediaPlayerFactory()));
+            chooser.addStrategy("mp3",new MP3FileExtensionStrategy(new Mp3MediaPlayerFactory()));
+
+           // Media media=new Media(filePath);
+            //mediaPlayer=new MediaPlayer(media);
+            mediaPlayer=chooser.getMediaPlayer(filePath);
             mediaView.setMediaPlayer(mediaPlayer);
 
             DoubleProperty witdth= mediaView.fitWidthProperty();
