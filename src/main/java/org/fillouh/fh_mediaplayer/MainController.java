@@ -21,6 +21,9 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import org.fillouh.fh_mediaplayer.factories.Mp3MediaPlayerFactory;
 import org.fillouh.fh_mediaplayer.factories.Mp4MediaPlayerFactory;
+import org.fillouh.fh_mediaplayer.observers.ObservableMediaPlayer;
+import org.fillouh.fh_mediaplayer.observers.SliderMedia;
+import org.fillouh.fh_mediaplayer.observers.VolumeSlider;
 import org.fillouh.fh_mediaplayer.strategies.MP3FileExtensionStrategy;
 import org.fillouh.fh_mediaplayer.strategies.MP4FileExtensionStrategy;
 import org.fillouh.fh_mediaplayer.strategies.MediaPlayerChooser;
@@ -49,7 +52,7 @@ public class MainController implements Initializable {
     private MediaView mediaView;
 
     @FXML
-    private Slider slider;
+    private Slider volumeSlider;
 
     @FXML
     private Slider seekSlider;
@@ -71,8 +74,6 @@ public class MainController implements Initializable {
             chooser.addStrategy("mp4",new MP4FileExtensionStrategy(new Mp4MediaPlayerFactory()));
             chooser.addStrategy("mp3",new MP3FileExtensionStrategy(new Mp3MediaPlayerFactory()));
 
-           // Media media=new Media(filePath);
-            //mediaPlayer=new MediaPlayer(media);
             mediaPlayer=chooser.getMediaPlayer(filePath);
             mediaView.setMediaPlayer(mediaPlayer);
 
@@ -82,27 +83,12 @@ public class MainController implements Initializable {
             witdth.bind(Bindings.selectDouble(mediaView.sceneProperty(),"width"));
             height.bind(Bindings.selectDouble(mediaView.sceneProperty(),"height"));
 
-            slider.setValue(mediaPlayer.getVolume()*100);
-            slider.valueProperty().addListener(new InvalidationListener() {
-                @Override
-                public void invalidated(Observable observable) {
-                    mediaPlayer.setVolume(slider.getValue()/100);
-                }
-            });
+            ObservableMediaPlayer observableMediaPlayer=new ObservableMediaPlayer(mediaPlayer);
 
-            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-                @Override
-                public void changed(ObservableValue<? extends Duration> observableValue, Duration duration, Duration t1) {
-                    seekSlider.setValue(t1.toSeconds());
-                }
-            });
-
-            seekSlider.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    mediaPlayer.seek(Duration.seconds(seekSlider.getValue()));
-                }
-            });
+            SliderMedia sliderMedia=new SliderMedia(seekSlider,mediaPlayer);
+            VolumeSlider volumeS=new VolumeSlider(volumeSlider,mediaPlayer);
+            observableMediaPlayer.addObserver(sliderMedia);
+            observableMediaPlayer.addObserver(volumeS);
 
             mediaPlayer.play();
 
@@ -112,38 +98,38 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void pauseVideo(ActionEvent event){
+    private void pauseMedia(ActionEvent event){
         mediaPlayer.pause();
     }
 
 
     @FXML
-    private void playVideo(ActionEvent event){
+    private void playMedia(ActionEvent event){
         mediaPlayer.setRate(1);
         mediaPlayer.play();
     }
 
     @FXML
-    private void stopVideo(ActionEvent event){
+    private void stopMedia(ActionEvent event){
         mediaPlayer.stop();
     }
 
 
     @FXML
-    private void fastVideo(ActionEvent event){
+    private void fastMedia(ActionEvent event){
         mediaPlayer.setRate(1.5);
 
     }
     @FXML
-    private void fasterVideo(ActionEvent event){
+    private void fasterMedia(ActionEvent event){
         mediaPlayer.setRate(2);
     }
     @FXML
-    private void slowVideo(ActionEvent event){
+    private void slowMedia(ActionEvent event){
         mediaPlayer.setRate(.75);
     }
     @FXML
-    private void slowerVideo(ActionEvent event){
+    private void slowerMedia(ActionEvent event){
         mediaPlayer.setRate(.5);
     }
     @FXML

@@ -20,31 +20,31 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="playButton" mnemonicParsing="false" onAction="#playVideo" text="Play">
+                  <Button fx:id="playButton" mnemonicParsing="false" onAction="#playMedia" text="Play">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#pauseVideo" text="Pause">
+                  <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#pauseMedia" text="Pause">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="stopButton" mnemonicParsing="false" onAction="#stopVideo" text="Stop">
+                  <Button fx:id="stopButton" mnemonicParsing="false" onAction="#stopMedia" text="Stop">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#slowerVideo" text="&lt;&lt;&lt;" />
-                  <Button mnemonicParsing="false" onAction="#slowVideo" text="&lt;&lt;" />
-                  <Button mnemonicParsing="false" onAction="#fastVideo" text="&gt;&gt;" />
-                  <Button mnemonicParsing="false" onAction="#fasterVideo" text="&gt;&gt;&gt;" />
+                  <Button mnemonicParsing="false" onAction="#slowerMedia" text="&lt;&lt;&lt;" />
+                  <Button mnemonicParsing="false" onAction="#slowMedia" text="&lt;&lt;" />
+                  <Button mnemonicParsing="false" onAction="#fastMedia" text="&gt;&gt;" />
+                  <Button mnemonicParsing="false" onAction="#fasterMedia" text="&gt;&gt;&gt;" />
                   <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exit" text="Exit">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Slider fx:id="slider">
+                  <Slider fx:id="volumeSlider">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
