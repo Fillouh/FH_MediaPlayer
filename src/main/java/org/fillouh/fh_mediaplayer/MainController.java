@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -18,6 +19,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.fillouh.fh_mediaplayer.factories.Mp3MediaPlayerFactory;
 import org.fillouh.fh_mediaplayer.factories.Mp4MediaPlayerFactory;
@@ -57,8 +59,12 @@ public class MainController implements Initializable {
     @FXML
     private Slider seekSlider;
 
+    @FXML
+    private Button fullscreenButton;
+
     private MediaPlayer mediaPlayer;
     private String filePath;
+    private boolean screenplay;
 
 
     public void openFile(){
@@ -137,9 +143,26 @@ public class MainController implements Initializable {
         System.exit(0);
     }
 
+    @FXML
+    private void fullScreen(){
+        Scene scene=fullscreenButton.getScene();
+        Stage stage=(Stage) scene.getWindow();
+        if(!screenplay){
+            stage.setFullScreen(true);
+            screenplay=true;
+            fullscreenButton.setText("Zoom out");
+        }
+        else {
+            stage.setFullScreen(false);
+            screenplay=false;
+            fullscreenButton.setText("Zoom in");
+        }
+
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        screenplay=false;
     }
 }

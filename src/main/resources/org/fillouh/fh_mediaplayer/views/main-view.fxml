@@ -44,11 +44,12 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Slider fx:id="volumeSlider">
+                  <Slider fx:id="volumeSlider" prefHeight="14.0" prefWidth="70.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Slider>
+                  <Button fx:id="fullscreenButton" mnemonicParsing="false" onAction="#fullScreen" styleClass="openFileButton" stylesheets="@../styles/style.css" text="Zoom in" />
                </children>
             </HBox>
          </children>
