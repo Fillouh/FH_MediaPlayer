@@ -1,4 +1,19 @@
 .button{
     -fx-background-color:transparent;
     -fx-cursor:hand;
+    -fx-font-family:"Arial";
+    -fx-background-radius:10px;
+}
+
+.hbox{
+    -fx-background-color:#c7f9cc;
+
+}
+
+.videozone{
+    -fx-background-color:linear-gradient(to bottom,#000,#c7f9cc);
+}
+
+.sliders{
+    -fx-
 }

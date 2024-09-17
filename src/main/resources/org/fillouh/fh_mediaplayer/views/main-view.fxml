@@ -11,9 +11,9 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fillouh.fh_mediaplayer.MainController">
    <bottom>
-      <VBox prefHeight="40.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="40.0" stylesheets="@../styles/style.css" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="hbox" stylesheets="@../styles/style.css">
                <children>
                   <Button fx:id="openFileButton" mnemonicParsing="false" onAction="#openFile" styleClass="openFileButton" stylesheets="@../styles/style.css" text="Open File">
                      <HBox.margin>
@@ -56,10 +56,10 @@
       </VBox>
    </bottom>
    <center>
-      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="videozone" stylesheets="@../styles/style.css" BorderPane.alignment="CENTER">
          <children>
             <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" />
-            <Slider fx:id="seekSlider" StackPane.alignment="BOTTOM_CENTER" />
+            <Slider fx:id="seekSlider" stylesheets="@../styles/style.css" StackPane.alignment="BOTTOM_CENTER" />
          </children>
       </StackPane>
    </center>

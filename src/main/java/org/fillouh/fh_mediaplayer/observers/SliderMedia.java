@@ -34,8 +34,10 @@ public class SliderMedia implements Observer, Initializable {
        this.slider.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
                 mediaPlayer.seek(Duration.seconds(slider.getValue()));
             }
         });
     }
 }
+

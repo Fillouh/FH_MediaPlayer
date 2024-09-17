@@ -27,3 +27,4 @@ public class ObservableMediaPlayer extends Subject{
         this.mediaPlayer = mediaPlayer;
     }
 }
+

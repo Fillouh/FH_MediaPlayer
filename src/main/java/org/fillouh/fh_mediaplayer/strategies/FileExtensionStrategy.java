@@ -6,3 +6,4 @@ import javafx.scene.media.MediaPlayer;
 public interface FileExtensionStrategy {
     public MediaPlayer createMediaPlayer(Media media);
 }
+

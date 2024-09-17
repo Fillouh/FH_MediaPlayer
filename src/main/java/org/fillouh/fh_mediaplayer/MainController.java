@@ -65,6 +65,7 @@ public class MainController implements Initializable {
     private MediaPlayer mediaPlayer;
     private String filePath;
     private boolean screenplay;
+    private boolean videoState;
 
 
     public void openFile(){
@@ -97,6 +98,7 @@ public class MainController implements Initializable {
             observableMediaPlayer.addObserver(volumeS);
 
             mediaPlayer.play();
+            videoState=true;
 
         }
 
@@ -105,7 +107,15 @@ public class MainController implements Initializable {
 
     @FXML
     private void pauseMedia(ActionEvent event){
-        mediaPlayer.pause();
+        if(videoState){
+            mediaPlayer.pause();
+            videoState=false;
+        }
+        else{
+            mediaPlayer.play();
+            videoState=true;
+        }
+
     }
 
 
@@ -113,11 +123,13 @@ public class MainController implements Initializable {
     private void playMedia(ActionEvent event){
         mediaPlayer.setRate(1);
         mediaPlayer.play();
+        videoState=true;
     }
 
     @FXML
     private void stopMedia(ActionEvent event){
         mediaPlayer.stop();
+        videoState=false;
     }
 
 
@@ -164,5 +176,6 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         screenplay=false;
+        videoState=false;
     }
 }
