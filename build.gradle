@@ -27,7 +27,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'org.fillouh.fh_mediaplayer'
-    mainClass = 'org.fillouh.fh_mediaplayer.App'
+    mainClass = 'org.fillouh.fh_mediaplayer.Launcher'
 }
 
 javafx {
@@ -40,6 +40,17 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'org.openjfx:javafx-media:21.0.2'
+    implementation 'org.openjfx:javafx-controls:17'
+    implementation 'org.openjfx:javafx-fxml:17'
+
+    def platform = org.gradle.internal.os.OperatingSystem.current()
+    if (platform.isWindows()) {
+        implementation 'org.openjfx:javafx-graphics:17:win'
+    } else if (platform.isLinux()) {
+        implementation 'org.openjfx:javafx-graphics:17:linux'
+    } else if (platform.isMacOsX()) {
+        implementation 'org.openjfx:javafx-graphics:17:mac'
+    }
 }
 
 test {
@@ -60,5 +71,23 @@ jlinkZip {
 
 
 shadowJar {
-    configurations = [project.configurations.runtimeClasspath]
+    archiveBaseName.set('FH_MediaPlayer')
+    archiveClassifier.set('')
+    archiveVersion.set('1.0')
+
+    manifest {
+        attributes 'Main-Class': 'org.fillouh.fh_mediaplayer.Launcher'
+    }
+    mergeServiceFiles()
+}
+
+manifest {
+    attributes 'Main-Class': 'org.fillouh.fh_mediaplayer.Launcher'
+}
+
+run {
+    jvmArgs = [
+            '--module-path', classpath.asPath,
+            '--add-modules', 'javafx.controls,javafx.fxml'
+    ]
 }
