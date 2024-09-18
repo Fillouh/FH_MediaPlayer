@@ -1,6 +1,7 @@
 # FH_MediaPlayer:
 
 ☢️☢️☢️ ***Disclaimer:*** ☢️☢️☢️ 
+
 ***This app is far away to be perfect, it's possible that it has a lot of bugs or inaccuracies. I do not take any responsibility for the possible corruptions of your files.***
 
 FH_MediaPlayer is a simple tool to reproduce audios and videos from your gallery. It's my personal project for the Tesina of 'Ingegneria del Software' course and its purpose is to be a way for me to learn and play
